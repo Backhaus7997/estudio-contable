@@ -5,14 +5,18 @@ const nextConfig: NextConfig = {
   reactCompiler: true,
 };
 /** @type {import('next').NextConfig} */
-const repo = process.env.GITHUB_REPOSITORY?.split('/')[1] || '';
-const isProd = process.env.NODE_ENV === 'production';
+const repo = "estudio-contable";
+const isProd = process.env.NODE_ENV === "production";
 
 module.exports = {
-  output: 'export',
+  output: "export",
   trailingSlash: true,
-  basePath: isProd ? `/${repo}` : '',
-  assetPrefix: isProd ? `/${repo}/` : '',
+
+  // GitHub Pages publica bajo /estudio-contable/
+  basePath: isProd ? `/${repo}` : "",
+  assetPrefix: isProd ? `/${repo}/` : "",
+
+  // Pages no soporta el optimizer de next/image
   images: { unoptimized: true },
 };
 export default nextConfig;
