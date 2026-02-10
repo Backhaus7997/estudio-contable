@@ -1,6 +1,27 @@
-import { Controller, Get, Body, Post } from '@nestjs/common';
+import {
+  BadRequestException,
+  Controller,
+  Get,
+  Body,
+  Post,
+  UnauthorizedException,
+  UsePipes,
+  ValidationPipe,
+} from '@nestjs/common';
 import { AppService } from './app.service';
 import { PrismaService } from './prisma.service';
+import { IsEmail, IsString } from 'class-validator';
+
+class LoginDto {
+  @IsString()
+  @IsEmail()
+  email!: string;
+
+  // DEV: lo dejamos opcional para tu demo
+  // En prod: @IsString() password!: string;
+  @IsString()
+  password?: string;
+}
 
 @Controller()
 export class AppController {
@@ -13,6 +34,7 @@ export class AppController {
   getHello(): string {
     return this.appService.getHello();
   }
+
   @Get('health')
   health() {
     return {
@@ -35,12 +57,15 @@ export class AppController {
   }
 
   @Post('auth/login')
-  async login(@Body() body: { email: string; password: string }) {
+  @UsePipes(
+    new ValidationPipe({
+      whitelist: true, // descarta campos extra
+      forbidNonWhitelisted: true, // si mandan extras, falla
+      transform: true,
+    }),
+  )
+  async login(@Body() body: LoginDto) {
     const { email } = body;
-
-    if (!email) {
-      return { ok: false, error: 'email is required' };
-    }
 
     // DEV ONLY: login sin password para destrabar la demo.
     // Más adelante: agregar passwordHash + bcrypt + JWT.
@@ -50,7 +75,8 @@ export class AppController {
     });
 
     if (!user) {
-      return { ok: false, error: 'Usuario no encontrado' };
+      // Podés usar 404 si preferís, pero en auth suele ser 401 para no filtrar usuarios.
+      throw new UnauthorizedException('Credenciales inválidas');
     }
 
     return {
@@ -58,5 +84,19 @@ export class AppController {
       token: 'dev-token',
       user,
     };
+  }
+
+  // OPCIONAL: útil para el frontend (en dev lo hacemos “mock”)
+  // En prod: validar JWT/guard y sacar el userId del token.
+  @Get('me')
+  async me() {
+    // DEV: devolvemos el primer usuario para probar UI rápido
+    const user = await this.prisma.user.findFirst({
+      select: { id: true, email: true, name: true, studioId: true, createdAt: true },
+      orderBy: { createdAt: 'asc' },
+    });
+
+    if (!user) throw new BadRequestException('No hay usuarios en la base');
+    return { ok: true, user };
   }
 }

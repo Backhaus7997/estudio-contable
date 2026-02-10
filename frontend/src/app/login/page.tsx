@@ -18,7 +18,9 @@ export default function LoginPage() {
         setError(result.error || "Usuario no encontrado");
       } else {
         // Aquí puedes guardar el token si lo necesitas: localStorage.setItem('token', result.token)
-        window.location.href = "/";
+        localStorage.setItem('user', JSON.stringify(result.user));
+        localStorage.setItem('token', result.token);
+        window.location.href = "/dashboard";
       }
     } catch (err: any) {
       setError(err.message || "Error de autenticación");
