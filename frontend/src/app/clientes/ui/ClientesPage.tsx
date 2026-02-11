@@ -106,6 +106,13 @@ export default function ClientesPage() {
             >
               + Nuevo cliente
             </button>
+            <button
+                onClick={() => (window.location.href = "/dashboard")}
+                className="rounded-xl bg-black/60 hover:bg-black/40 border border-blue-500/40 px-4 py-2 transition"
+            >
+                ← Volver al dashboard
+            </button>
+
           </div>
         </div>
 
@@ -245,7 +252,7 @@ function ClientesTable({ rows }: { rows: Cliente[] }) {
                 <div className="flex justify-end gap-2">
                   <button
                     className="rounded-xl border border-white/10 bg-white/5 px-3 py-1.5 text-xs hover:bg-white/10"
-                    onClick={() => alert(`TODO: ver detalle ${c.id}`)}
+                    onClick={() => (window.location.href = `/clientes/${c.id}`)}
                   >
                     Ver
                   </button>

@@ -13,7 +13,7 @@ model Studio {
   createdAt DateTime @default(now())
 
   users     User[]
-  clients   Client[]
+clientes  Cliente[]
 }
 
 model User {
@@ -28,14 +28,20 @@ model User {
   @@index([studioId])
 }
 
-model Client {
-  id        String   @id @default(cuid())
-  name      String
-  taxId     String?
-  createdAt DateTime @default(now())
+model Cliente {
+  id            String   @id @default(uuid())
+  razonSocial   String
+  cuit          String?  @db.VarChar(20)
+  email         String?  @db.VarChar(200)
+  telefono      String?  @db.VarChar(50)
+  estado        String   @default("Activo") @db.VarChar(10)
+  creadoEn      DateTime @default(now())
+  actualizadoEn DateTime @updatedAt
 
-  studioId  String
-  studio    Studio   @relation(fields: [studioId], references: [id])
+  studioId      String
+  studio        Studio   @relation(fields: [studioId], references: [id])
 
+  @@index([cuit])
+  @@index([razonSocial])
   @@index([studioId])
 }

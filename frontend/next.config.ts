@@ -9,7 +9,6 @@ const repo = "estudio-contable";
 const isProd = process.env.NODE_ENV === "production";
 
 module.exports = {
-  output: "export",
   trailingSlash: true,
 
   // GitHub Pages publica bajo /estudio-contable/

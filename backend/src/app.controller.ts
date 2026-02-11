@@ -9,7 +9,7 @@ import {
   ValidationPipe,
 } from '@nestjs/common';
 import { AppService } from './app.service';
-import { PrismaService } from './prisma.service';
+import { PrismaService } from '../prisma/prisma.service';
 import { IsEmail, IsString } from 'class-validator';
 
 class LoginDto {
