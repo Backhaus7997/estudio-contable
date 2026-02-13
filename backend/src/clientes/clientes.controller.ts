@@ -20,7 +20,7 @@ export class ClientesController {
     return this.service.getById(id);
   }
 
-  @Post()
+@Post()
   create(
     @Body()
     body: {
@@ -29,11 +29,11 @@ export class ClientesController {
       email?: string;
       telefono?: string;
       estado?: ClienteEstado;
+      studioId: string; // 👈 agregar
     },
   ) {
     return this.service.create(body);
   }
-
   @Patch(':id')
   update(
     @Param('id') id: string,

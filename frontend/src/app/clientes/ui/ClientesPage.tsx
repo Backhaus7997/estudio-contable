@@ -102,7 +102,7 @@ export default function ClientesPage() {
           <div className="flex gap-2">
             <button
               className="rounded-xl bg-blue-600 px-4 py-2 text-sm font-semibold shadow hover:bg-blue-500 active:bg-blue-700"
-              onClick={() => alert("TODO: abrir modal / navegar a /clientes/nuevo")}
+              onClick={() => (window.location.href = "/clientes/nuevo")}
             >
               + Nuevo cliente
             </button>

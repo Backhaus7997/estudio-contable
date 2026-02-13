@@ -51,7 +51,7 @@ export class AppController {
     const [studios, users, clients] = await Promise.all([
       this.prisma.studio.count(),
       this.prisma.user.count(),
-      this.prisma.client.count(),
+      this.prisma.cliente.count(),
     ]);
     return { ok: true, studios, users, clients };
   }

@@ -22,16 +22,18 @@ export class ClientesService {
     email?: string;
     telefono?: string;
     estado?: ClienteEstado;
+    studioId: string;
   }) {
     if (!input.razonSocial?.trim()) throw new BadRequestException('razonSocial es obligatoria');
 
-    return this.repo.create({
-      razonSocial: input.razonSocial.trim(),
-      cuit: input.cuit?.trim() || undefined,
-      email: input.email?.trim() || undefined,
-      telefono: input.telefono?.trim() || undefined,
-      estado: input.estado ?? 'Activo',
-    });
+  return this.repo.create({
+    razonSocial: input.razonSocial.trim(),
+    cuit: input.cuit?.trim(),
+    email: input.email?.trim(),
+    telefono: input.telefono?.trim(),
+    estado: input.estado ?? 'Activo',
+    studioId: input.studioId, // 👈 ESTA LÍNEA
+    });  
   }
 
   async update(

@@ -15,10 +15,10 @@ async function main() {
     },
   });
 
-  await prisma.client.createMany({
+  await prisma.cliente.createMany({
     data: [
-      { studioId: studio.id, name: 'Cliente 1', taxId: '20-00000000-0' },
-      { studioId: studio.id, name: 'Cliente 2', taxId: '27-00000000-0' },
+      { studioId: studio.id, razonSocial: 'Cliente 1', cuit: '20-00000000-0' },
+      { studioId: studio.id, razonSocial: 'Cliente 2', cuit: '27-00000000-0' },
     ],
   });
 

@@ -13,7 +13,7 @@ model Studio {
   createdAt DateTime @default(now())
 
   users     User[]
-clientes  Cliente[]
+  clientes  Cliente[]
 }
 
 model User {

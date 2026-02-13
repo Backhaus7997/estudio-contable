@@ -9,6 +9,7 @@ export type CreateClienteInput = {
   email?: string;
   telefono?: string;
   estado?: ClienteEstado;
+  studioId: string;
 };
 
 export type UpdateClienteInput = Partial<CreateClienteInput>;
@@ -43,17 +44,22 @@ export class ClientesRepository {
   }
 
   async create(input: CreateClienteInput) {
+    const studioId = input.studioId ?? (await this.prisma.studio.findFirst({ select: { id: true } }))?.id;
+
+    if (!studioId) throw new Error("No existe Studio para asociar el cliente");
+
     return this.prisma.cliente.create({
       data: {
         razonSocial: input.razonSocial,
-        cuit: input.cuit,
-        email: input.email,
-        telefono: input.telefono,
-        estado: input.estado ?? 'Activo',
+        cuit: input.cuit ?? null,
+        email: input.email ?? null,
+        telefono: input.telefono ?? null,
+        estado: input.estado ?? "Activo",
+        studio: { connect: { id: studioId } },
       },
     });
   }
-
+  
   async update(id: string, patch: UpdateClienteInput) {
     return this.prisma.cliente.update({
       where: { id },

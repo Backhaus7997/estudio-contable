@@ -8,4 +8,15 @@ export type Cliente = {
   telefono?: string;
   estado: ClienteEstado;
   creadoEn: string; // ISO
+  studioId: string;
+};
+
+export type CreateClienteInput = {
+  razonSocial: string;
+  cuit?: string;
+  email?: string;
+  telefono?: string;
+  estado?: ClienteEstado;
+
+studioId: string;
 };
