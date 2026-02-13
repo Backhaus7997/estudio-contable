@@ -105,8 +105,3 @@ Convenciones de UI
 	•	El módulo de Reportes prioriza “Resumen global” y filtros temporales (ej: últimos 30 días).
 
 ⸻
-
-Si querés, en el próximo mensaje te lo dejo también con:
-	•	un diagrama ASCII (arquitectura + flujo),
-	•	una sección de “Cómo correr en local” (frontend + backend + docker compose db),
-	•	y un “Roadmap” (MVP → v1).
